@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<title>Mé poznámky</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="\static\styles\custom.css" type="text/css">
+
+<style>
+
+</style>
+</head>
+<h3><u>Uložené poznámky</u></h3>
+<br>
+<div class="row">
+
+    <div>
+        {% for poznamky in poznamky %}
+        <br><br>
+        <div class="column"  >
+            <l class="text">{{poznamky[1]}}</l>
+        </div>
+
+                <div class="column2" >
+                   <u> <l class="text2">{{poznamky[2]}}</l></u>
+                </div>
+        <div class="column3"  >
+            <l class="text3">důležitost: {{poznamky[3]}}</l>
+        </div>
+
+                <tr>
+                    <td><a href="/smaz/{{ poznamky[0] }}">Smazat</a> <a href="/uprav/{{ poznamky[0] }}">Upravit</a></td>
+
+                </tr>
+        {% endfor %}
+    </div>
+
+</div>
+<form action="/poznamky/vlozit">
+    <center><input class="zpet" type="submit" value="Vložit poznámku" class="back"/></center>
+
+</form>
+</body>
+</html>
