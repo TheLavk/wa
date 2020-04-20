@@ -90,7 +90,7 @@ def uprav_poznamku(poznamky_id):
         conn.commit()
         conn.close()
         return redirect('/')
-    return render_template('pozn.html', form=form)
+    return render_template('index.html', form=form)
 
 
 
