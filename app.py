@@ -72,13 +72,14 @@ def uprav_poznamku(poznamky_id):
     conn = sqlite3.connect(databaze)
     c = conn.cursor()
     # Poznámku získáme výběrem z databáze, kdy hledáme řádek s id poznámky
-    c.execute("SELECT pozn, datum FROM poznamky WHERE rowid=?", (poznamky_id,))
+    c.execute("SELECT pozn, datum, dulezitost FROM poznamky WHERE rowid=?", (poznamky_id,))
     # Dotazem získám seznam (n-tici) s daty
     poznamka_tuple = c.fetchone()
     conn.close()
     # Naplnění formuláře daty z databáze
     form = PoznamkaForm(poznamka=poznamka_tuple[0])
     poznamky_text = form.poznamka.data
+    dulezitost = form.dulezitost.data
     if form.validate_on_submit():
         conn = sqlite3.connect(databaze)
         c = conn.cursor()
@@ -86,7 +87,7 @@ def uprav_poznamku(poznamky_id):
         # https://docs.python.org/3/library/sqlite3.html
         # a hledejte text: Never do this -- insecure!
         # Aby nedošlo k útoku SQL injection na vaší aplikaci:
-        c.execute("UPDATE poznamky SET pozn=? WHERE rowid=?", (poznamky_text, poznamky_id,))
+        c.execute("UPDATE poznamky SET pozn=?, dulezitost=? WHERE rowid=?", (poznamky_text, dulezitost, poznamky_id,))
         conn.commit()
         conn.close()
         return redirect('/')
